@@ -12,6 +12,7 @@ export default function Navbar() {
   const { t } = useLanguage();
   const pathname = usePathname();
   const router = useRouter();
+  const isOnboarding = pathname === "/onboarding";
   const [hasProfile, setHasProfile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -50,6 +51,10 @@ export default function Navbar() {
     handleScroll(); // Initial check
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -118,7 +123,7 @@ export default function Navbar() {
         </Link>
 
         {/* Search Bar - Desktop */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
+        <div className={`flex-1 max-w-md mx-8 ${isOnboarding ? "hidden" : "hidden md:flex"}`}>
           <form onSubmit={handleSearch} className="relative w-full">
             <input
               type="text"
@@ -198,18 +203,20 @@ export default function Navbar() {
         </div> */}
 
         {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="lg:hidden p-2 text-gray-600 hover:text-navy transition-colors"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+        {!isOnboarding && (
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 text-gray-600 hover:text-navy transition-colors"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        )}
       </nav>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
+      {!isOnboarding && isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 top-16 z-40 bg-white border-t border-gray-200">
           <div className="p-4">
             {/* Mobile Search */}

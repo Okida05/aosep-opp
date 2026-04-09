@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "@/components/Navbar";
 import { UserProfile, saveProfile } from "@/lib/matching";
 
 type Step = 1 | 2 | 3;
@@ -11,9 +10,10 @@ const FIELDS = [
   { label: "Computer Science", value: "Computer Science", emoji: "💻" },
   { label: "Engineering", value: "Engineering", emoji: "⚙️" },
   { label: "Business", value: "Business", emoji: "📊" },
+  { label: "Law", value: "Law", emoji: "⚖️" },
 ];
-const LEVELS = ["L1", "L2", "L3", "Master"];
-const ENGLISH_LEVELS = ["A2", "B1", "B2", "C1", "C2"];
+const LEVELS = ["L1", "L2", "L3", "Master", "High school", "None"];
+const ENGLISH_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -48,25 +48,29 @@ export default function OnboardingPage() {
     return (
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         {opts.map((o) => (
-          <div
+          <button
             key={o.value}
+            type="button"
             className={`radio-opt${form[fieldKey] === o.value ? " selected" : ""}`}
             onClick={() => set(fieldKey, o.value as UserProfile[K])}
+            aria-pressed={form[fieldKey] === o.value}
           >
             {o.emoji && <span>{o.emoji}</span>}
             <span>{o.label}</span>
-          </div>
+          </button>
         ))}
       </div>
     );
   }
 
   return (
-    <div className="page-enter">
-      <Navbar />
+    <div>
       <div
         style={{
-          minHeight: "calc(100vh - 60px)",
+          minHeight: "100vh",
+          position: "relative",
+          zIndex: 100,
+          pointerEvents: "auto",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -77,6 +81,9 @@ export default function OnboardingPage() {
       >
         <div
           style={{
+            position: "relative",
+            zIndex: 101,
+            pointerEvents: "auto",
             background: "#fff",
             border: "1px solid var(--border)",
             borderRadius: 24,

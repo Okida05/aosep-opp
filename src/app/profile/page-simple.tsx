@@ -94,6 +94,8 @@ const getInitialProfile = (): ExtendedProfile => {
       ["JavaScript", "Python", "React", "Node.js", "Machine Learning", "Data Analysis"] :
       surveyData.field === "Engineering" ?
       ["CAD", "MATLAB", "SolidWorks", "Project Management", "Quality Control"] :
+      surveyData.field === "Law" ?
+      ["Legal Research", "Case Analysis", "Contract Drafting", "Public Speaking", "Legal Writing"] :
       ["Excel", "PowerPoint", "Financial Analysis", "Marketing", "Business Strategy"],
     languages: [
       { language: "Arabic", proficiency: "Native" },

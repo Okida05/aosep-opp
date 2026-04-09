@@ -132,19 +132,6 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        <div style={{ display: "flex", gap: 6, justifyContent: "center", marginTop: "3rem" }}>
-          {[0, 1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              style={{
-                width: i === 0 ? 18 : 6,
-                height: 6,
-                borderRadius: i === 0 ? 3 : "50%",
-                background: i === 0 ? "var(--emerald)" : "var(--border)",
-              }}
-            />
-          ))}
-        </div>
       </section>
 
       {/* Stats strip */}
